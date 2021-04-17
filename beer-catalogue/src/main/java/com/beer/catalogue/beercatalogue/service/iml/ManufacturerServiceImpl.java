@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,17 +33,20 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	}
 	
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANUFACTURER')")
 	public List<ManufacturerData> getManufacturers(Pageable paging) {
 		return manufacturerRepository.findAll(paging).stream().map(ManufacturerMapper::manufacturerToManufacturerData).collect(Collectors.toList());
 	}
 	
 	@Override
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANUFACTURER')")
 	public ManufacturerData getManufacturer(Long id) {
 		Manufacturer manufacturer = getJpaManufacturer(id);
 		return ManufacturerMapper.manufacturerToManufacturerData(manufacturer);
 	}
 	
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public ManufacturerData addManufacturer(ManufacturerData manufacturerData) {
 		Manufacturer manufacturer = ManufacturerMapper.manufacturerDataToManufacturer(manufacturerData);
 		return ManufacturerMapper.manufacturerToManufacturerData(manufacturerRepository.save(manufacturer));
@@ -50,6 +54,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #id)")
 	public ManufacturerData editManufacturer(Long id, ManufacturerData manufacturerData) {
 		Manufacturer manufacturerToEdit = getJpaManufacturer(id);
 		manufacturerToEdit.setName(manufacturerData.getName());
@@ -58,6 +63,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	}
 	
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteManufacturer(Long id) {
 		Manufacturer manufacturer = getJpaManufacturer(id);
 		manufacturerRepository.delete(manufacturer);
@@ -65,6 +71,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
 	public BeerData addBeer(BeerData beerData, Long manufacturerId) {
 		Manufacturer manufacturer = getJpaManufacturer(manufacturerId);
 		Beer beer = BeerMapper.beerDataToBeer(beerData);
@@ -74,6 +81,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
 	public BeerData editBeer(Long manufacturerId, Long beerId, BeerData beer) {
 		Manufacturer manufacturer = getJpaManufacturer(manufacturerId);
 		Optional<Beer> beerToEditOptional = manufacturer.getBeers()
@@ -94,6 +102,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
 	public void deleteBeer(Long manufacturerId, Long beerId) {
 		Manufacturer manufacturer = getJpaManufacturer(manufacturerId);
 		Optional<Beer> beerToEditOptional = manufacturer.getBeers()

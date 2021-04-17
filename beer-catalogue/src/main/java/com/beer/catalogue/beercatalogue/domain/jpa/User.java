@@ -3,13 +3,10 @@ package com.beer.catalogue.beercatalogue.domain.jpa;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.beer.catalogue.beercatalogue.enumeration.BeerType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,17 +19,17 @@ import lombok.Setter;
 @Setter
 @Builder()
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Beer")
-public class Beer {
+@Table(name = "User")
+public class User {
 
-	private @Id @GeneratedValue Long id;
-	private String name;
-	private Double graduation;
-	@Enumerated(EnumType.STRING)
-	private BeerType type;
-	private String description;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@Id
+	@GeneratedValue
+	private int id;
+	private String username;
+	private String password;
+	@OneToOne(mappedBy = "user")
 	private Manufacturer manufacturer;
+	private String role;
 }
