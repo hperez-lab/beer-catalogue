@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,18 +32,14 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 	}
 	
 	@Override
-	public List<ManufacturerData> getManufacturers() {
-		return manufacturerRepository.findAll().stream().map(ManufacturerMapper::manufacturerToManufacturerData).collect(Collectors.toList());
+	public List<ManufacturerData> getManufacturers(Pageable paging) {
+		return manufacturerRepository.findAll(paging).stream().map(ManufacturerMapper::manufacturerToManufacturerData).collect(Collectors.toList());
 	}
 	
 	@Override
 	public ManufacturerData getManufacturer(Long id) {
 		Manufacturer manufacturer = getJpaManufacturer(id);
 		return ManufacturerMapper.manufacturerToManufacturerData(manufacturer);
-	}
-	
-	private Manufacturer getJpaManufacturer(Long id) {
-		return manufacturerRepository.findById(id).orElseThrow(() -> new ManufacturerNotFoundException(id));
 	}
 	
 	@Override
@@ -86,7 +83,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		if (beerToEditOptional.isPresent()) {
 			Beer beerToEdit = beerToEditOptional.get();
 			beerToEdit.setName(beer.getName());
-			beerToEdit.setDescritpion(beer.getDescritpion());
+			beerToEdit.setDescription(beer.getDescription());
 			beerToEdit.setGraduation(beer.getGraduation());
 			beerToEdit.setType(beer.getType());
 			return BeerMapper.beerToBeerData(beerRepository.save(beerToEdit));
@@ -109,6 +106,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		} else {
 			throw new BeerNotFoundException(beerId);
 		}
+	}
+	
+	private Manufacturer getJpaManufacturer(Long id) {
+		return manufacturerRepository.findById(id).orElseThrow(() -> new ManufacturerNotFoundException(id));
 	}
 
 }

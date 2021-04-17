@@ -3,6 +3,7 @@ package com.beer.catalogue.beercatalogue.service.iml;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
@@ -22,8 +23,8 @@ public class BeerServiceImpl implements BeerService {
 	}
 	
 	@Override
-	public List<BeerData> getBeers() {
-		return beerRepository.findAll().stream().map(BeerMapper::beerToBeerData).collect(Collectors.toList());
+	public List<BeerData> getBeers(Pageable paging) {
+		return beerRepository.findAll(paging).stream().map(BeerMapper::beerToBeerData).collect(Collectors.toList());
 	}
 	
 	@Override

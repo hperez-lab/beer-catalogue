@@ -11,6 +11,6 @@ public class BeerData {
 	private String name;
 	private Double graduation;
 	private BeerType type;
-	private String descritpion;
+	private String description;
 	private Long manufacturerId;
 }

@@ -9,7 +9,7 @@ public class BeerMapper {
 
 	public static BeerData beerToBeerData(Beer beer) {
 		BeerData response = new BeerData();
-		response.setDescritpion(beer.getDescritpion());
+		response.setDescription(beer.getDescription());
 		response.setGraduation(beer.getGraduation());
 		response.setId(beer.getId());
 		response.setName(beer.getName());
@@ -20,7 +20,7 @@ public class BeerMapper {
 
 	public static BeerResponse beerDataToBeerResponse(BeerData beer) {
 		BeerResponse response = new BeerResponse();
-		response.setDescritpion(beer.getDescritpion());
+		response.setDescription(beer.getDescription());
 		response.setGraduation(beer.getGraduation());
 		response.setId(beer.getId());
 		response.setName(beer.getName());
@@ -31,7 +31,7 @@ public class BeerMapper {
 
 	public static Beer beerDataToBeer(BeerData beer) {
 		Beer response = new Beer();
-		response.setDescritpion(beer.getDescritpion());
+		response.setDescription(beer.getDescription());
 		response.setGraduation(beer.getGraduation());
 		response.setId(beer.getId());
 		response.setName(beer.getName());
@@ -41,7 +41,7 @@ public class BeerMapper {
 	
 	public static BeerData beerRequestToBeerData(BeerRequest beer) {
 		BeerData response = new BeerData();
-		response.setDescritpion(beer.getDescritpion());
+		response.setDescription(beer.getDescription());
 		response.setGraduation(beer.getGraduation());
 		response.setName(beer.getName());
 		response.setType(beer.getType());

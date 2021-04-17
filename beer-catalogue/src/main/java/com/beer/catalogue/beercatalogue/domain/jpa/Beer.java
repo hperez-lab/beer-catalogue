@@ -22,7 +22,7 @@ public class Beer {
 	private String name;
 	private Double graduation;
 	private BeerType type;
-	private String descritpion;
+	private String description;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Manufacturer manufacturer;
 }

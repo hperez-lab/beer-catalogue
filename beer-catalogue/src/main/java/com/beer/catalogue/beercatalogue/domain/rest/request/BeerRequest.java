@@ -17,5 +17,5 @@ public class BeerRequest {
     @ApiModelProperty(value = "Beer type")
 	private BeerType type;
     @ApiModelProperty(value = "Beer description")
-	private String descritpion;
+	private String description;
 }

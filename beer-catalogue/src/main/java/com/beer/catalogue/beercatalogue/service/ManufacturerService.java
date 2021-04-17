@@ -2,12 +2,14 @@ package com.beer.catalogue.beercatalogue.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
 import com.beer.catalogue.beercatalogue.domain.data.ManufacturerData;
 
 public interface ManufacturerService {
 
-	public List<ManufacturerData> getManufacturers();
+	public List<ManufacturerData> getManufacturers(Pageable paging);
 
 	public ManufacturerData getManufacturer(Long id);
 
