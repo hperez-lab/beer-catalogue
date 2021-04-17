@@ -20,7 +20,7 @@ public class BeerResponse {
 	private BeerType type;
     @ApiModelProperty(value = "Beer description")
 	private String descritpion;
-    @ApiModelProperty(value = "Beer manufacturer")
-	private PlainManufacturerResponse manufacturer;
+    @ApiModelProperty(value = "Beer manufacturer identifier")
+	private Long manufacturerId;
 
 }
