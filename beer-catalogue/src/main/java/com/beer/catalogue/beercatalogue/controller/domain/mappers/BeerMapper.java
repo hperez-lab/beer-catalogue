@@ -1,7 +1,9 @@
 package com.beer.catalogue.beercatalogue.controller.domain.mappers;
 
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
+import com.beer.catalogue.beercatalogue.domain.data.BeerFilterData;
 import com.beer.catalogue.beercatalogue.domain.jpa.Beer;
+import com.beer.catalogue.beercatalogue.domain.rest.request.BeerFilterRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.request.BeerRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.response.BeerResponse;
 
@@ -45,6 +47,16 @@ public class BeerMapper {
 		response.setGraduation(beer.getGraduation());
 		response.setName(beer.getName());
 		response.setType(beer.getType());
+		return response;
+	}
+
+	public static BeerFilterData beerFilterRequestToBeerFilterData(BeerFilterRequest beer) {
+		BeerFilterData response = new BeerFilterData();
+		response.setDescription(beer.getDescription());
+		response.setGraduation(beer.getGraduation());
+		response.setName(beer.getName());
+		response.setType(beer.getType());
+		response.setManufacturerId(beer.getManufacturerId());
 		return response;
 	}
 }

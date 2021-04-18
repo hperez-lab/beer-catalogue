@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
+import com.beer.catalogue.beercatalogue.domain.data.BeerFilterData;
 import com.beer.catalogue.beercatalogue.domain.jpa.Beer;
 import com.beer.catalogue.beercatalogue.exception.BeerNotFoundException;
 import com.beer.catalogue.beercatalogue.repository.BeerRepository;
@@ -23,8 +24,8 @@ public class BeerServiceImpl implements BeerService {
 	}
 	
 	@Override
-	public List<BeerData> getBeers(Pageable paging) {
-		return beerRepository.findAll(paging).stream().map(BeerMapper::beerToBeerData).collect(Collectors.toList());
+	public List<BeerData> getBeers(BeerFilterData filterData, Pageable paging) {
+		return beerRepository.findAll(filterData, paging).stream().map(BeerMapper::beerToBeerData).collect(Collectors.toList());
 	}
 	
 	@Override

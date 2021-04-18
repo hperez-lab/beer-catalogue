@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
+import com.beer.catalogue.beercatalogue.domain.data.BeerFilterData;
+import com.beer.catalogue.beercatalogue.domain.rest.request.BeerFilterRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.response.BeerResponse;
 import com.beer.catalogue.beercatalogue.service.BeerService;
 
@@ -34,10 +36,11 @@ public class BeerController {
 
 	@ApiOperation(value = "Get all beers.")
 	@GetMapping
-	public ResponseEntity<Page<BeerResponse>> getBeers(@RequestParam(defaultValue = "0") int page,
+	public ResponseEntity<Page<BeerResponse>> getBeers(BeerFilterRequest filter, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "2") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
-		List<BeerResponse> beers = beerService.getBeers(paging).stream().map(BeerMapper::beerDataToBeerResponse)
+		BeerFilterData filterData = BeerMapper.beerFilterRequestToBeerFilterData(filter);
+		List<BeerResponse> beers = beerService.getBeers(filterData, paging).stream().map(BeerMapper::beerDataToBeerResponse)
 				.collect(Collectors.toList());
 		return new ResponseEntity<>(new PageImpl<>(beers), HttpStatus.OK);
 	}
