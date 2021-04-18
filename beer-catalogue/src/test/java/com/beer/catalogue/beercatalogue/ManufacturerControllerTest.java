@@ -14,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 
-import com.beer.catalogue.beercatalogue.domain.rest.request.BeerRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.request.ManufacturerRequest;
-import com.beer.catalogue.beercatalogue.enumeration.BeerType;
 
 public class ManufacturerControllerTest extends AbstractTest {
 

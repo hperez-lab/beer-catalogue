@@ -107,7 +107,6 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 				.filter(beerItem -> beerItem.getId().equals(beerId))
 				.findFirst();
 		if (beerToEditOptional.isPresent()) {
-//			beerRepository.delete(beerToEditOptional.get());
 			manufacturer.getBeers().remove(beerToEditOptional.get());
 		} else {
 			throw new BeerNotFoundException(beerId);
