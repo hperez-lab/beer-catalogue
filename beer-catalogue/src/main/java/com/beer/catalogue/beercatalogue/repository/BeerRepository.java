@@ -14,7 +14,7 @@ import com.beer.catalogue.beercatalogue.domain.jpa.Beer;
 
 public interface BeerRepository extends JpaRepository<Beer, Long> {
 
-	public Page<Beer> findAll(Specification<Beer> user,Pageable page);
+	public Page<Beer> findAll(Specification<Beer> filter, Pageable page);
 
 	default Page<Beer> findAll(BeerFilterData filter, Pageable pageable) {
 		return findAll(search(filter), pageable);

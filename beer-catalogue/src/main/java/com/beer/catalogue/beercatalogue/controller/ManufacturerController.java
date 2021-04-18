@@ -1,10 +1,6 @@
 package com.beer.catalogue.beercatalogue.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
-import com.beer.catalogue.beercatalogue.controller.domain.mappers.ManufacturerMapper;
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
 import com.beer.catalogue.beercatalogue.domain.data.ManufacturerData;
+import com.beer.catalogue.beercatalogue.domain.mappers.BeerMapper;
+import com.beer.catalogue.beercatalogue.domain.mappers.ManufacturerMapper;
 import com.beer.catalogue.beercatalogue.domain.rest.request.BeerRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.request.ManufacturerRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.response.BeerResponse;
@@ -47,9 +43,9 @@ public class ManufacturerController {
 	public ResponseEntity<Page<ManufacturerResponse>> getManufacturers(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "2") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
-		List<ManufacturerResponse> manufacturers = manufacturerService.getManufacturers(paging).stream()
-				.map(ManufacturerMapper::manufacturerDataToManufacturerResponse).collect(Collectors.toList());
-		return new ResponseEntity<>(new PageImpl<>(manufacturers), HttpStatus.OK);
+		Page<ManufacturerResponse> manufacturers = manufacturerService.getManufacturers(paging)
+				.map(ManufacturerMapper::manufacturerDataToManufacturerResponse);
+		return new ResponseEntity<>(manufacturers, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Get manufacturer details.")

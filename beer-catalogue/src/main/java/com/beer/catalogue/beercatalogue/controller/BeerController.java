@@ -1,10 +1,6 @@
 package com.beer.catalogue.beercatalogue.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
 import com.beer.catalogue.beercatalogue.domain.data.BeerFilterData;
+import com.beer.catalogue.beercatalogue.domain.mappers.BeerMapper;
 import com.beer.catalogue.beercatalogue.domain.rest.request.BeerFilterRequest;
 import com.beer.catalogue.beercatalogue.domain.rest.response.BeerResponse;
 import com.beer.catalogue.beercatalogue.service.BeerService;
@@ -40,9 +36,8 @@ public class BeerController {
 			@RequestParam(defaultValue = "2") int size, @RequestParam(defaultValue = "id") String sortBy) {
 		Pageable paging = PageRequest.of(page, size, Sort.by(sortBy));
 		BeerFilterData filterData = BeerMapper.beerFilterRequestToBeerFilterData(filter);
-		List<BeerResponse> beers = beerService.getBeers(filterData, paging).stream().map(BeerMapper::beerDataToBeerResponse)
-				.collect(Collectors.toList());
-		return new ResponseEntity<>(new PageImpl<>(beers), HttpStatus.OK);
+		Page<BeerResponse> beers = beerService.getBeers(filterData, paging).map(BeerMapper::beerDataToBeerResponse);
+		return new ResponseEntity<>(beers, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Get beers details.")

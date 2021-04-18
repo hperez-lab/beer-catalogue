@@ -1,4 +1,4 @@
-package com.beer.catalogue.beercatalogue.controller.domain.mappers;
+package com.beer.catalogue.beercatalogue.domain.mappers;
 
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
 import com.beer.catalogue.beercatalogue.domain.data.BeerFilterData;

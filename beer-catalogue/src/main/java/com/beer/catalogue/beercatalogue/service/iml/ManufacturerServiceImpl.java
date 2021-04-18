@@ -1,20 +1,19 @@
 package com.beer.catalogue.beercatalogue.service.iml;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.beer.catalogue.beercatalogue.controller.domain.mappers.BeerMapper;
-import com.beer.catalogue.beercatalogue.controller.domain.mappers.ManufacturerMapper;
 import com.beer.catalogue.beercatalogue.domain.data.BeerData;
 import com.beer.catalogue.beercatalogue.domain.data.ManufacturerData;
 import com.beer.catalogue.beercatalogue.domain.jpa.Beer;
 import com.beer.catalogue.beercatalogue.domain.jpa.Manufacturer;
+import com.beer.catalogue.beercatalogue.domain.mappers.BeerMapper;
+import com.beer.catalogue.beercatalogue.domain.mappers.ManufacturerMapper;
 import com.beer.catalogue.beercatalogue.exception.BeerNotFoundException;
 import com.beer.catalogue.beercatalogue.exception.ManufacturerNotFoundException;
 import com.beer.catalogue.beercatalogue.repository.BeerRepository;
@@ -31,20 +30,18 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		this.manufacturerRepository = manufacturerRepository;
 		this.beerRepository = beerRepository;
 	}
-	
+
 	@Override
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANUFACTURER')")
-	public List<ManufacturerData> getManufacturers(Pageable paging) {
-		return manufacturerRepository.findAll(paging).stream().map(ManufacturerMapper::manufacturerToManufacturerData).collect(Collectors.toList());
+	public Page<ManufacturerData> getManufacturers(Pageable paging) {
+		return manufacturerRepository.findAll(paging).map(ManufacturerMapper::manufacturerToManufacturerData);
 	}
-	
+
 	@Override
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANUFACTURER')")
 	public ManufacturerData getManufacturer(Long id) {
 		Manufacturer manufacturer = getJpaManufacturer(id);
 		return ManufacturerMapper.manufacturerToManufacturerData(manufacturer);
 	}
-	
+
 	@Override
 	@PreAuthorize("hasRole('ADMIN')")
 	public ManufacturerData addManufacturer(ManufacturerData manufacturerData) {
@@ -61,14 +58,14 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		manufacturerToEdit.setNationality(manufacturerData.getNationality());
 		return ManufacturerMapper.manufacturerToManufacturerData(manufacturerRepository.save(manufacturerToEdit));
 	}
-	
+
 	@Override
 	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteManufacturer(Long id) {
 		Manufacturer manufacturer = getJpaManufacturer(id);
 		manufacturerRepository.delete(manufacturer);
 	}
-	
+
 	@Override
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
@@ -78,7 +75,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 		beer.setManufacturer(manufacturer);
 		return BeerMapper.beerToBeerData(beerRepository.save(beer));
 	}
-	
+
 	@Override
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
@@ -99,7 +96,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 			throw new BeerNotFoundException(beerId);
 		}
 	}
-	
+
 	@Override
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN') or hasRole('MANUFACTURER') and @userSecurity.userHasManufacturer(principal, #manufacturerId)")
@@ -116,7 +113,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 			throw new BeerNotFoundException(beerId);
 		}
 	}
-	
+
 	private Manufacturer getJpaManufacturer(Long id) {
 		return manufacturerRepository.findById(id).orElseThrow(() -> new ManufacturerNotFoundException(id));
 	}

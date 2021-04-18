@@ -38,10 +38,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.httpBasic().and().authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/beers/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/manufacturers/**").permitAll()
 				.anyRequest().authenticated()
 				.and().csrf().disable().formLogin().disable();
 	}
-	
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v3/api-docs",
