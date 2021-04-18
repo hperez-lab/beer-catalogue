@@ -26,10 +26,10 @@ public class LoadDatabase {
 		User user1 = User.builder().username("dammalias").password(new BCryptPasswordEncoder().encode("1234")).role("ROLE_MANUFACTURER").build();
 		User user2 = User.builder().username("heinekenalias").password(new BCryptPasswordEncoder().encode("1234")).role("ROLE_MANUFACTURER").build();
 		User user3 = User.builder().username("mahoualias").password(new BCryptPasswordEncoder().encode("1234")).role("ROLE_MANUFACTURER").build();
-		
+
 		Manufacturer man1 = Manufacturer.builder().name("Damm").nationality("Spain").user(user1).build();
 		Manufacturer man2 = Manufacturer.builder().name("Heineken").nationality("Netherlands").user(user2).build();
-		Manufacturer man3 = Manufacturer.builder().name("Mahou").nationality("Mahou 5 estrellas").user(user3).build();
+		Manufacturer man3 = Manufacturer.builder().name("Mahou").nationality("Spain").user(user3).build();
 
 		return args -> {
 			log.info("Preloading " + userRepository.save(admin));
