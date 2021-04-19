@@ -24,7 +24,7 @@ The implemented REST API allows different manufacturers to manage their beer cat
 
 
 
-#How to run the project
+# How to run the project
 
 
 The project can be deployable to a Docker container following the below steps:
