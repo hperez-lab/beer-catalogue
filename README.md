@@ -3,6 +3,14 @@
 
 The implemented REST API allows different manufacturers to manage their beer catalogue. Beer consumers can look up the beer catalogue. 
 
+# Implemented functionalities
+
+1. Create the data model and the CRUD endpoints for a beers API, HTTP RESTFUL compliant, without the need to persist any information yet. 
+2. Add the required persistence/service layer to the defined API.
+3. Let's make this secure.
+4. Add pagination to the collection endpoints.
+5. Include the beer search functionality to the API: users should be able to search by any beer attribute, such as name, type, nationality, manufacturer...
+
 
 
 # Technical decisions
