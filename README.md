@@ -86,7 +86,7 @@ Manufacturer user with role MANUFACTURER associated to the manufacturer Heineken
   * User Name: heinekenalias
   * Password: 1234
   
-Manufacturer user with role MANUFACTURER associated to the manufacturer Mahou (id=5). Credentials:
+Manufacturer user with role MANUFACTURER associated to the manufacturer Mahou (id=6). Credentials:
 
   * User Name: mahoualias
   * Password: 1234
